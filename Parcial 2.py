@@ -9,29 +9,37 @@
 from itertools import count
 import operator
 
+class bcolors:
+    OK = '\033[92m' #GREEN
+    WARNING = '\033[93m' #YELLOW
+    FAIL = '\033[91m' #RED
+    RESET = '\033[0m' #RESET COLOR
 
 estados = {1:"Reponer Copia", 2:"Quitar Pelicula",3:"Dejar como esta"}
 genero = {1:"Accion",2:"Terror",3:"Comedia"}
 peliculas= {}
 
-codigoPelicula = 0
+cantidad=int(input("¿Cuantas peliculas quiere cargar?: "))
 
 def cargar_Pelicula():
-    global codigoPelicula
-    codigoPelicula += 1
-    print("\x1b[0;37m"+"Agregando pelicula con codigo:", codigoPelicula)
+    codigoPelicula=int(input("Ingresar codigo de pelicula:"))
     genero=int(input("Ingresar genero (Colocar 'verGeneros()' para ver los tipos que hay):"))
     descripcion=input("Ingresar descripción de pelicula:")
     cantCopias=int(input("Ingrese la cantidad de copias:"))
     cantCopiasAlqu=int(input("Ingrese la cantidad de copias alquiladas:"))
     estado=int(input("Ingrese el estado en el que se encuentra:"))
     peliculas[codigoPelicula] = {"Genero":genero,"Descripcion":descripcion,"Cantidad":cantCopias,"Alquiladas":cantCopiasAlqu,"Estado":estado}
-    print("================ La pelicula fue agregada con éxito ================")
-    si=int(input("\x1b[1;33m"+"Colocar '1' para cargar otra pelicula o otro caracter para cancelar: "))
-    if si == 1:
-       cargar_Pelicula()
+    print(bcolors.OK + "================ La pelicula fue agregada con éxito ================" + bcolors.RESET)
 
-cargar_Pelicula()
+""" i = 1
+while i <= cantidad:
+    cargar_Pelicula()
+    i += 1 """
+
+peliculas[12] = {"Genero":1,"Descripcion":"Scream 4","Cantidad":4,"Alquiladas":4,"Estado":2}
+peliculas[13] = {"Genero":2,"Descripcion":"Padre de familia","Cantidad":42,"Alquiladas":2,"Estado":1}
+peliculas[144] = {"Genero":1,"Descripcion":"Dragon ball Z","Cantidad":7,"Alquiladas":6,"Estado":3}
+peliculas[233] = {"Genero":3,"Descripcion":"Black mirror","Cantidad":4,"Alquiladas":6,"Estado":1}
 
 def peliculasGenero():
     print("================================")
@@ -61,19 +69,18 @@ def peliculasXdesc():
 
 def peliculasEliminar():
     print("================================")
-    print("Peliculas a eliminar:")
+    print(bcolors.FAIL +"Peliculas a eliminar:" + bcolors.RESET)
     for clave2 in peliculas:
         valor = peliculas[clave2]
         if int(valor["Cantidad"]) <= int(valor["Alquiladas"]):
             print(peliculas[clave2]["Descripcion"])
-    print("================================")
 
 def peliculaCodigo():
-    codigo=int(input("Ingrese el codigo para buscar una pelicula:"))
+    codigo=int(input(bcolors.WARNING +"Ingrese el codigo para buscar una pelicula:" + bcolors.RESET))
     if codigo in peliculas:
      print(peliculas[codigo])
     else:
-     print('Esta clave no existe')
+     print(bcolors.FAIL +'Esta clave no existe' + bcolors.RESET)
 
 def peliculasGeneroMayor():
     print("================================")
@@ -85,7 +92,12 @@ def peliculasGeneroMayor():
     print ("GENERO:" + genero[max(generosCount)])
 
 def listarPelis():
-    print(list(e for e in peliculas if e['Genero']  == 2)[0])
+    print("Peliculas del genero 1 y 2:")
+    for clave2 in peliculas:
+        valor = peliculas[clave2]
+        if int(valor["Genero"]) == 1 or int(valor["Genero"]) == 2:
+            print(peliculas[clave2])
+    print("================================")
 
 listarPelis()
 peliculasGeneroMayor()
@@ -95,4 +107,4 @@ peliculasGenero()
 copiasAlquiladas()
 peliculaCodigo()
 
-input("\x1b[0;37m"+"Precionar enter para cerrar programa")
+input(bcolors.FAIL +"Precionar enter para cerrar programa" + bcolors.RESET)
