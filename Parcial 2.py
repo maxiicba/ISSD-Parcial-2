@@ -1,4 +1,7 @@
+#Importando 'time' para poder utilizar sleep y poder pausar las funciones para que sea más legible.
 import time
+
+#Se crea una clase para que se pueda obtener el string de una manera mas legible. Pudiendo así dar color a los mensajes
 class bcolors:
     OK = '\033[92m' #GREEN
     WARNING = '\033[93m' #YELLOW
@@ -6,12 +9,13 @@ class bcolors:
     RESET = '\033[0m' #RESET COLOR
 
 estados = {1:"Reponer Copia", 2:"Quitar Pelicula",3:"Dejar como esta"}
-genero = {1:"Accion",2:"Terror",3:"Comedia"}
+genero = {1:"Accion",2:"Terror",3:"Comedia", 4:"Drama"}
 peliculas= {}
+
 
 def inicializador():
     try:
-        cantidad=int(input("¿Cuantas peliculas quiere cargar?: "))
+        cantidad=int(input(bcolors.WARNING +"¿Cuantas peliculas quiere cargar?: " + bcolors.RESET))
         if cantidad <= 0:
             print(bcolors.FAIL +"Coloque un numero mayor a 0" + bcolors.RESET)   
             return inicializador()
@@ -22,12 +26,22 @@ def inicializador():
 
 def cargar_Pelicula():
     codigoPelicula=int(input("Ingresar codigo de pelicula:"))
-    genero=int(input("Ingresar genero (1 = 'Accion', 2 = 'Terror', 3 = 'Comedia'):"))
+    while(True):
+        generoV=int(input("Ingresar genero (1 = 'Accion', 2 = 'Terror', 3 = 'Comedia, 4 = 'Drama'):"))
+        if not generoV > int(len(genero)) and not generoV <= 0:
+            break
+        else:
+            print(bcolors.FAIL +"Colocar un genero correcto." + bcolors.RESET)
     descripcion=input("Ingresar descripción de pelicula:")
     cantCopias=int(input("Ingrese la cantidad de copias:"))
     cantCopiasAlqu=int(input("Ingrese la cantidad de copias alquiladas:"))
-    estado=int(input("Ingrese el estado en el que se encuentra (1 = 'Reponer Copia', 2 = 'Quitar Pelicula', 3 = 'Dejar como esta'):"))
-    peliculas[codigoPelicula] = {"Genero":genero,"Descripcion":descripcion,"Cantidad":cantCopias,"Alquiladas":cantCopiasAlqu,"Estado":estado}
+    while(True):
+        estadoV=int(input("Ingrese el estado en el que se encuentra (1 = 'Reponer Copia', 2 = 'Quitar Pelicula', 3 = 'Dejar como esta'):"))
+        if not estadoV > int(len(estados)) and not estadoV <= 0:
+            break
+        else:
+            print(bcolors.FAIL +"Colocar un estado correcto." + bcolors.RESET)
+    peliculas[codigoPelicula] = {"Genero":generoV,"Descripcion":descripcion,"Cantidad":cantCopias,"Alquiladas":cantCopiasAlqu,"Estado":estadoV}
     print(bcolors.OK + "================ La pelicula fue agregada con éxito ================" + bcolors.RESET)
 
 def repetir(cantidad):
@@ -35,11 +49,6 @@ def repetir(cantidad):
     while i <= cantidad:
         cargar_Pelicula()
         i += 1 
-
-peliculas[233] = {"Genero":1,"Descripcion":"Scream 4","Cantidad":2,"Alquiladas":4,"Estado":2}
-peliculas[13] = {"Genero":2,"Descripcion":"Padre de familia","Cantidad":42,"Alquiladas":2,"Estado":1}
-peliculas[144] = {"Genero":2,"Descripcion":"Dragon ball Z","Cantidad":7,"Alquiladas":6,"Estado":1}
-peliculas[2] = {"Genero":3,"Descripcion":"Black mirror","Cantidad":4,"Alquiladas":6,"Estado":1}
 
 def peliculasGeneroMayor():
     time.sleep(4)
@@ -121,10 +130,10 @@ def peliculaCodigo():
 def listarPelis():
     time.sleep(4)
     print(bcolors.OK +"8. Listar todas las películas de drama y acción" + bcolors.RESET)
-    print("Peliculas del genero 1 y 2:")
+    print("Peliculas del genero 1 y 4:")
     for clave2 in peliculas:
         valor = peliculas[clave2]
-        if int(valor["Genero"]) == 1 or int(valor["Genero"]) == 2:
+        if int(valor["Genero"]) == 1 or int(valor["Genero"]) == 4:
             print(" | "+str(genero[valor["Genero"]])+" | "+valor["Descripcion"]+" | "+str(valor["Cantidad"])+" | "+ str(valor["Alquiladas"])+" | "+str(estados[valor["Estado"]] + " | ")) 
     print("================================")
 
