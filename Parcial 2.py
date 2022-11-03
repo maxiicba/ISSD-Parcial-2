@@ -32,7 +32,8 @@ def cargar_Pelicula():
             break
         else:
             print(bcolors.FAIL +"Colocar un genero correcto." + bcolors.RESET)
-    descripcion=input("Ingresar descripción de pelicula:")
+    descripcionO=input("Ingresar descripción de pelicula:")
+    descripcion = descripcionO.capitalize()
     cantCopias=int(input("Ingrese la cantidad de copias:"))
     cantCopiasAlqu=int(input("Ingrese la cantidad de copias alquiladas:"))
     while(True):
@@ -53,11 +54,11 @@ def repetir(cantidad):
 def peliculasGeneroMayor():
     time.sleep(4)
     print(bcolors.OK +"7. Mostrar qué género se alquila más (Búsqueda del mayor)." + bcolors.RESET)
-    for clave1 in genero:
-        valor = genero[clave1]      
+    for genClave in genero:
+        valor = genero[genClave]      
         generosCount = [] 
-        for clave in peliculas:
-            generosCount.append(peliculas[clave]["Genero"])
+        for pelClave in peliculas:
+            generosCount.append(peliculas[pelClave]["Genero"])
     print ("El genero que mas se alquila es: " + genero[max(set(generosCount), key=generosCount.count)])
     print("================================")
 
@@ -65,24 +66,24 @@ def peliculasGenero():
     time.sleep(1)
     print("================================")
     print(bcolors.OK +"2. Indicar cantidad de películas por género." + bcolors.RESET)
-    for clave1 in genero:
-        valor = genero[clave1]
+    for genClave in genero:
+        valor = genero[genClave]
         generosCount = [] 
         texto = ""
-        for clave in peliculas:
-            generosCount.append(peliculas[clave]["Genero"])
+        for pelClave in peliculas:
+            generosCount.append(peliculas[pelClave]["Genero"])
             
-        if generosCount.count(clave1) > 1:
+        if generosCount.count(genClave) > 1:
             texto = "s"
-        print("En el genero " + str(valor) + " hay: " + str(generosCount.count(clave1)) + " pelicula" + texto)
+        print("En el genero " + str(valor) + " hay: " + str(generosCount.count(genClave)) + " pelicula" + texto)
     print("================================")
     
 def copiasAlquiladas():
     time.sleep(4)
     print(bcolors.OK +"3. Indicar la cantidad total de copias alquiladas" + bcolors.RESET)
     total = 0
-    for clave in peliculas:
-        valor = peliculas[clave]
+    for pelClave in peliculas:
+        valor = peliculas[pelClave]
         total = total + valor["Alquiladas"]
     print("Total de copias alquiladas: ", total)
     print("================================")
@@ -102,10 +103,10 @@ def peliculasEliminar():
     time.sleep(4)
     print(bcolors.OK +"5. Listar todas las películas que hay que quitar del catálogo de películas. " + bcolors.RESET)
     print(bcolors.FAIL +"Peliculas a eliminar:" + bcolors.RESET)
-    for clave2 in peliculas:
-        valor = peliculas[clave2]
+    for pelClave in peliculas:
+        valor = peliculas[pelClave]
         if int(valor["Cantidad"]) <= int(valor["Alquiladas"]):
-            print(peliculas[clave2]["Descripcion"])
+            print(peliculas[pelClave]["Descripcion"])
     print("================================")
 
 def peliculaCodigo():
@@ -131,8 +132,8 @@ def listarPelis():
     time.sleep(4)
     print(bcolors.OK +"8. Listar todas las películas de drama y acción" + bcolors.RESET)
     print("Peliculas del genero 1 y 4:")
-    for clave2 in peliculas:
-        valor = peliculas[clave2]
+    for pelClave in peliculas:
+        valor = peliculas[pelClave]
         if int(valor["Genero"]) == 1 or int(valor["Genero"]) == 4:
             print(" | "+str(genero[valor["Genero"]])+" | "+valor["Descripcion"]+" | "+str(valor["Cantidad"])+" | "+ str(valor["Alquiladas"])+" | "+str(estados[valor["Estado"]] + " | ")) 
     print("================================")
@@ -141,12 +142,12 @@ def listarPorCodigo():
     time.sleep(4)
     print(bcolors.OK +"9. Mostrar un Listado ordenados por Código de película. " + bcolors.RESET)
     keys = peliculas.keys()
-    sorted_keys = sorted(keys)
-    sorted_desserts = {}
-    for key in sorted_keys:
-        sorted_desserts[key] = peliculas[key]
+    keys_ordenadas = sorted(keys)
+    valores_ordenados = {}
+    for key in keys_ordenadas:
+        valores_ordenados[key] = peliculas[key]
     print(bcolors.WARNING +'Lista de peliculas ordenadas por código' + bcolors.RESET)
-    print(sorted_desserts)
+    print(valores_ordenados)
     print("================================")
 
 def buscarPorDes():
