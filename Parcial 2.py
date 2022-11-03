@@ -1,3 +1,4 @@
+import time
 class bcolors:
     OK = '\033[92m' #GREEN
     WARNING = '\033[93m' #YELLOW
@@ -8,7 +9,16 @@ estados = {1:"Reponer Copia", 2:"Quitar Pelicula",3:"Dejar como esta"}
 genero = {1:"Accion",2:"Terror",3:"Comedia"}
 peliculas= {}
 
-cantidad=int(input("¿Cuantas peliculas quiere cargar?: "))
+def inicializador():
+    try:
+        cantidad=int(input("¿Cuantas peliculas quiere cargar?: "))
+        if cantidad <= 0:
+            print(bcolors.FAIL +"Coloque un numero mayor a 0" + bcolors.RESET)   
+            return inicializador()
+        repetir(cantidad)
+    except:
+        print(bcolors.FAIL +"Ocurrio un error vuelve a intentarlo" + bcolors.RESET)   
+        return inicializador()
 
 def cargar_Pelicula():
     codigoPelicula=int(input("Ingresar codigo de pelicula:"))
@@ -20,10 +30,11 @@ def cargar_Pelicula():
     peliculas[codigoPelicula] = {"Genero":genero,"Descripcion":descripcion,"Cantidad":cantCopias,"Alquiladas":cantCopiasAlqu,"Estado":estado}
     print(bcolors.OK + "================ La pelicula fue agregada con éxito ================" + bcolors.RESET)
 
-""" i = 1
-while i <= cantidad:
-    cargar_Pelicula()
-    i += 1  """
+def repetir(cantidad):
+    i = 1
+    while i <= cantidad:
+        cargar_Pelicula()
+        i += 1 
 
 peliculas[233] = {"Genero":1,"Descripcion":"Scream 4","Cantidad":2,"Alquiladas":4,"Estado":2}
 peliculas[13] = {"Genero":2,"Descripcion":"Padre de familia","Cantidad":42,"Alquiladas":2,"Estado":1}
@@ -31,6 +42,7 @@ peliculas[144] = {"Genero":2,"Descripcion":"Dragon ball Z","Cantidad":7,"Alquila
 peliculas[2] = {"Genero":3,"Descripcion":"Black mirror","Cantidad":4,"Alquiladas":6,"Estado":1}
 
 def peliculasGeneroMayor():
+    time.sleep(4)
     print(bcolors.OK +"7. Mostrar qué género se alquila más (Búsqueda del mayor)." + bcolors.RESET)
     for clave1 in genero:
         valor = genero[clave1]      
@@ -41,6 +53,7 @@ def peliculasGeneroMayor():
     print("================================")
 
 def peliculasGenero():
+    time.sleep(1)
     print("================================")
     print(bcolors.OK +"2. Indicar cantidad de películas por género." + bcolors.RESET)
     for clave1 in genero:
@@ -56,6 +69,7 @@ def peliculasGenero():
     print("================================")
     
 def copiasAlquiladas():
+    time.sleep(4)
     print(bcolors.OK +"3. Indicar la cantidad total de copias alquiladas" + bcolors.RESET)
     total = 0
     for clave in peliculas:
@@ -65,6 +79,7 @@ def copiasAlquiladas():
     print("================================")
 
 def peliculasXdesc():
+    time.sleep(4)
     print(bcolors.OK +"4. Mostrar un Listado de películas ordenadas por descripción. " + bcolors.RESET)
     array = []
     for key in peliculas:
@@ -75,6 +90,7 @@ def peliculasXdesc():
     print("================================")
 
 def peliculasEliminar():
+    time.sleep(4)
     print(bcolors.OK +"5. Listar todas las películas que hay que quitar del catálogo de películas. " + bcolors.RESET)
     print(bcolors.FAIL +"Peliculas a eliminar:" + bcolors.RESET)
     for clave2 in peliculas:
@@ -84,15 +100,26 @@ def peliculasEliminar():
     print("================================")
 
 def peliculaCodigo():
+    time.sleep(4)
     print(bcolors.OK +"6. Ingresar un Código de película y mostrar todos sus datos. " + bcolors.RESET)
-    codigo=int(input(bcolors.WARNING +"Ingrese el codigo para buscar una pelicula:" + bcolors.RESET))
+    try:
+        codigo=int(input(bcolors.WARNING +"Ingrese el codigo para buscar una pelicula:" + bcolors.RESET))
+        if codigo <= 0:
+            print(bcolors.FAIL +"Coloque un numero mayor a 0" + bcolors.RESET)   
+            return peliculaCodigo()
+    except:
+        print(bcolors.FAIL +"Ocurrio un error vuelve a intentarlo" + bcolors.RESET)   
+        return peliculaCodigo()
+
     if codigo in peliculas:
       print(" | "+str(genero[peliculas[codigo]["Genero"]])+" | "+peliculas[codigo]["Descripcion"]+" | "+str(peliculas[codigo]["Cantidad"])+" | "+ str(peliculas[codigo]["Alquiladas"])+" | "+str(estados[peliculas[codigo]["Estado"]] + " | ")) 
     else:
-     print(bcolors.FAIL +'Esta clave no existe' + bcolors.RESET)
+     print(bcolors.FAIL +'No hay datos que coincidan con el codigo colocado' + bcolors.RESET)
+    print("================================")
 
 
 def listarPelis():
+    time.sleep(4)
     print(bcolors.OK +"8. Listar todas las películas de drama y acción" + bcolors.RESET)
     print("Peliculas del genero 1 y 2:")
     for clave2 in peliculas:
@@ -102,17 +129,19 @@ def listarPelis():
     print("================================")
 
 def listarPorCodigo():
+    time.sleep(4)
     print(bcolors.OK +"9. Mostrar un Listado ordenados por Código de película. " + bcolors.RESET)
     keys = peliculas.keys()
     sorted_keys = sorted(keys)
     sorted_desserts = {}
     for key in sorted_keys:
         sorted_desserts[key] = peliculas[key]
-    print(bcolors.OK +'Lista de peliculas ordenadas por código' + bcolors.RESET)
+    print(bcolors.WARNING +'Lista de peliculas ordenadas por código' + bcolors.RESET)
     print(sorted_desserts)
     print("================================")
 
 def buscarPorDes():
+    time.sleep(4)
     print(bcolors.OK +"10. Realizar una consulta por descripción (Es decir ingresar el nombre de la película y mostrar sus datos)" + bcolors.RESET)
     descripcion=input(bcolors.WARNING +"Ingrese la descripcion para buscar una pelicula: " + bcolors.RESET)
     error = False
@@ -130,8 +159,8 @@ def buscarPorDes():
     print("================================")
 
 def listarCopiasInferior():
+    time.sleep(4)
     print(bcolors.OK +"11. Mostrar todas las películas con cantidad de copias inferior a 3." + bcolors.RESET)
-    print(bcolors.OK + "Listado de peliculas menor a 3 copias:" + bcolors.RESET)
     encontro = 0
     for key in peliculas:
         valor = peliculas[key]
@@ -145,8 +174,8 @@ def listarCopiasInferior():
     print("================================")
 
 def peliculas_Reponer():
+    time.sleep(4)
     print(bcolors.OK +"12. Mostrar todas las películas de terror que se deben reponer" + bcolors.RESET)
-    print(bcolors.OK + "Listado de peliculas de terror a reponer:" + bcolors.RESET)
     for key in peliculas:
         valor = peliculas[key]
         if int(valor["Genero"]) == 2:
@@ -157,15 +186,8 @@ def peliculas_Reponer():
                 break
     print("================================")
 
-def test():
-    print(bcolors.OK +" | Genero | Descripcion | Cantidad | Alquiladas | Estado" + bcolors.RESET)
-    for clave1 in peliculas:
-        valor = peliculas[clave1]
-        genero1 = valor["Genero"]
-        print(" | "+str(genero[valor["Genero"]])+" | "+valor["Descripcion"]+" | "+str(valor["Cantidad"])+" | "+ str(valor["Alquiladas"])+" | "+str(estados[valor["Estado"]] + " | ")) 
-    print("================================")
-
-
+#=====Iniciar funciones=====
+inicializador()
 peliculasGenero()
 copiasAlquiladas()
 peliculasXdesc()
@@ -177,5 +199,6 @@ listarPorCodigo()
 buscarPorDes()
 listarCopiasInferior()
 peliculas_Reponer()
+#===========================
 
 input(bcolors.FAIL +"Precionar enter para cerrar programa" + bcolors.RESET)
