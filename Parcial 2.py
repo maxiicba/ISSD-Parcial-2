@@ -1,3 +1,6 @@
+#El proyecto se trabajo realizando los cambios en un repositorio en github: 
+#https://github.com/maxiicba/ISSD-Parcial-2.git
+
 #Importando 'time' para poder utilizar sleep y poder pausar las funciones para que sea más legible.
 import time
 
